@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './Board';
+import styled from 'styled-components';
 
 function App() {
   return (
@@ -7,6 +8,8 @@ function App() {
       <header className="App-header">
 
           Learn React!!
+          <br/>
+          <Board/>
 
       </header>
     </div>
