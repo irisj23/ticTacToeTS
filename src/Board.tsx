@@ -1,25 +1,38 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import Square from './Square';
 
-function Board() {
+interface BoardProps {
+  onClick(i: number): void;
+  squares: ('X' | 'O' | null)[];
+}
 
+const Board: React.FC<BoardProps> = ({onClick, squares}) => {
+
+  const renderSquare = (i: number): ReactNode => {
+    return (
+      <Square
+        value={squares[i]}
+        onClick={() => onClick(i)}
+      />
+    );
+  }
 
   return (
     <React.Fragment>
       <br/>
-        <Square/>
-        <Square/>
-        <Square/>
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       <br/>
       <br/>
-        <Square/>
-        <Square/>
-        <Square/>
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
       <br/>
       <br/>
-        <Square/>
-        <Square/>
-        <Square/>
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
       <br/>
     </React.Fragment>
   )

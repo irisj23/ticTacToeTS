@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 
-function Square() {
+interface SquareProps {
+  value: 'X' | 'O' | null;
+  onClick(): void;
+}
 
-  let [clickValue, setClickValue] = useState('X');
-
-
-  const buttonClick = () => {
-    console.log('clicked')
-    clickValue === 'O' ? setClickValue('X') : setClickValue('O');
-
-    console.log(clickValue)
-  }
+const Square: React.FC<SquareProps> = ({ value, onClick}) => {
 
 
   return (
     <React.Fragment>
-      <button onClick={buttonClick}>{clickValue}</button>
+      <button onClick={onClick}>{value}</button>
     </React.Fragment>
   )
 }
