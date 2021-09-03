@@ -30,19 +30,22 @@ const checkWin = (squares: SquareValue[]): SquareValue => {
 
 function App() {
 
-  let [winner, setWinner] = useState('');
+  let [winner, setWinner] = useState<string | null>(null);
   let [xIsNext, setXIsNext] = useState<boolean>(true);
   let [squares, setSquares] = useState<SquareValue[]>(Array(9).fill(null));
 
-
+console.log(squares)
   const handleClick = (i: number): void => {
 
 
     if (checkWin(squares)) {
+
+      let win = checkWin(squares)
+      setWinner(win);
       return;
     }
+    console.log('i: ', i)
     squares[i] = xIsNext ? 'X' : 'O';
-
 
     setXIsNext(!xIsNext);
   }
