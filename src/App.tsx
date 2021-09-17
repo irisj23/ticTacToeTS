@@ -13,20 +13,29 @@ const Container = styled.div`
 `
 const Header = styled.div`
   order: 1;
+  padding: 5px;
+  text-align: center;
+  color: #1abc9c;
+  font-size: 50px;
 
 `
 const BoardSquares = styled.div`
   order: 2;
+  padding: 50px;
 
 `
 const Reset = styled.button`
-  order: 3;
-
+  order: 4;
+  padding: 10px;
+  text-align: center;
+  color: #1abc9c;
+  font-size: 30px;
 `
 
 const Winner = styled.div`
-  order: 4;
-
+  order: 3;
+  font-size: 60px;
+  font-weight: bold;
 `
 
 type SquareValue = 'X' | 'O' | null;
@@ -83,7 +92,7 @@ console.log(squares)
   return (
     <Container>
       <Header>
-          Learn TypeScript!!
+          TIC TAC TOE
       </Header>
       <BoardSquares>
           <br/>
@@ -92,12 +101,17 @@ console.log(squares)
           onClick={i => handleClick(i)}
           />
       </BoardSquares>
+      {winner &&
+            <Winner>
+            {winner} is winner!
+          </Winner>
+      }
       <Reset onClick={resetBoard}>
         RESET
       </Reset>
-      <Winner>
-        {winner} is winner!
-      </Winner>
+
+
+
     </Container>
   );
 }
