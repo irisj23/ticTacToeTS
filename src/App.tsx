@@ -9,33 +9,41 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   align-content: center;
-  min-height: 85vh;
+  min-height: 75vh;
 `
 const Header = styled.div`
   order: 1;
   padding: 5px;
   text-align: center;
   color: #1abc9c;
-  font-size: 50px;
+  font-size: 35px;
 
 `
 const BoardSquares = styled.div`
   order: 2;
-  padding: 50px;
+  padding: 5px 50px 5px 50px;
 
 `
 const Reset = styled.button`
-  order: 4;
-  padding: 10px;
+  order: 5;
+  padding: 8px;
   text-align: center;
   color: #1abc9c;
   font-size: 30px;
 `
 
 const Winner = styled.div`
-  order: 3;
+  order: 4;
   font-size: 60px;
   font-weight: bold;
+`
+
+const PlayerTurns = styled.div`
+  order: 3;
+  font-size: 25px;
+  font-weight: bold;
+  padding: 15px;
+  text-align: center;
 `
 
 type SquareValue = 'X' | 'O' | null;
@@ -67,26 +75,41 @@ function App() {
   let [winner, setWinner] = useState<string | null>(null);
   let [xIsNext, setXIsNext] = useState<boolean>(true);
   let [squares, setSquares] = useState<SquareValue[]>(Array(9).fill(null));
+  let [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
+  let [nextPlayer, setNextPlayer] = useState<string | null>(null);
 
-console.log(squares)
+//console.log(squares)
   const handleClick = (i: number): void => {
+
+    if (squares[i] !== null) {
+      alert('this square has already been played')
+      return;
+    }
 
 
     if (checkWin(squares)) {
 
       let win = checkWin(squares)
       setWinner(win);
+      setCurrentPlayer('')
+      setNextPlayer('')
       return;
     }
     console.log('i: ', i)
     squares[i] = xIsNext ? 'X' : 'O';
 
     setXIsNext(!xIsNext);
+
+    xIsNext ? setCurrentPlayer('X is playing') : setCurrentPlayer('O is playing');
+    xIsNext ? setNextPlayer('O is next') : setNextPlayer('X is next');
+
   }
 
   const resetBoard = () => {
     setSquares(Array(9).fill(null))
     setWinner(null)
+    setCurrentPlayer('')
+    setNextPlayer('')
   }
 
   return (
@@ -101,6 +124,11 @@ console.log(squares)
           onClick={i => handleClick(i)}
           />
       </BoardSquares>
+      <PlayerTurns>
+      {currentPlayer}
+      <br/>
+      {nextPlayer}
+      </PlayerTurns>
       {winner &&
             <Winner>
             {winner} is winner!
