@@ -5,13 +5,29 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   align-content: center;
-  min-height: 90vh;
+  min-height: 85vh;
+`
+const Header = styled.div`
+  order: 1;
+
+`
+const BoardSquares = styled.div`
+  order: 2;
+
+`
+const Reset = styled.button`
+  order: 3;
+
 `
 
+const Winner = styled.div`
+  order: 4;
+
+`
 
 type SquareValue = 'X' | 'O' | null;
 
@@ -59,19 +75,29 @@ console.log(squares)
     setXIsNext(!xIsNext);
   }
 
+  const resetBoard = () => {
+    setSquares(Array(9).fill(null))
+    setWinner(null)
+  }
 
   return (
     <Container>
-      <div>
-
+      <Header>
           Learn TypeScript!!
+      </Header>
+      <BoardSquares>
           <br/>
           <Board
           squares={squares}
           onClick={i => handleClick(i)}
           />
+      </BoardSquares>
+      <Reset onClick={resetBoard}>
+        RESET
+      </Reset>
+      <Winner>
         {winner} is winner!
-      </div>
+      </Winner>
     </Container>
   );
 }
