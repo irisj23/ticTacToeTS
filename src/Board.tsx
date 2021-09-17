@@ -20,7 +20,11 @@ const Board: React.FC<BoardProps> = ({onClick, squares}) => {
   return (
     <React.Fragment>
       <br/>
-        {renderSquare(0)}
+      <Square
+        value={squares[0]}
+        onClick={() => onClick(0)}
+      />
+
         {renderSquare(1)}
         {renderSquare(2)}
       <br/>

@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import Board from './Board';
 import styled from 'styled-components';
-import { createSecureContext } from 'tls';
-import { captureRejectionSymbol } from 'events';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  min-height: 90vh;
+`
+
 
 type SquareValue = 'X' | 'O' | null;
 
@@ -52,8 +61,8 @@ console.log(squares)
 
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <Container>
+      <div>
 
           Learn TypeScript!!
           <br/>
@@ -62,8 +71,8 @@ console.log(squares)
           onClick={i => handleClick(i)}
           />
         {winner} is winner!
-      </header>
-    </div>
+      </div>
+    </Container>
   );
 }
 
