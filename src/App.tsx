@@ -82,12 +82,12 @@ function App() {
 //console.log(squares)
   const handleClick = (i: number): void => {
 
+    if (winner) return;
+
     if (squares[i] !== null) {
       alert('this square has already been played')
       return;
     }
-
-
 
     console.log('i: ', i)
     squares[i] = xIsNext ? 'X' : 'O';
