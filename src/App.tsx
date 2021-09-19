@@ -103,16 +103,16 @@ const App: React.FC = (props: {}) => {
       return;
     }
 
-    console.log('i: ', i)
+    let xPlayerTurn = true;
 
     squares[i] = xIsNext ? 'X' : 'O';
     let updatedSquares = [...squares, squares[i]];
 
     setSquares(updatedSquares)
 
-    setXIsNext(!xIsNext);
+    xPlayerTurn = false;
 
-    xIsNext ? setNextPlayer('O is next') : setNextPlayer('X is next');
+    xPlayerTurn ? setNextPlayer('O is next') : setNextPlayer('X is next');
 
     let win = checkWin(squares);
 
@@ -127,13 +127,19 @@ const App: React.FC = (props: {}) => {
     }
 
     let randomSquare = computerMove(updatedSquares);
-    console.log('random: ', randomSquare)
-   // setAvailableSquares(randomSquares)
-   xIsNext ? squares[randomSquare] = 'O' : squares[randomSquare] = 'X';
+
+    xPlayerTurn ? squares[randomSquare] = 'X' : squares[randomSquare] = 'O';
 
    setSquares([...squares, squares[randomSquare]]);
-   setXIsNext(!xIsNext);
 
+   let winCheck = checkWin([...squares, squares[randomSquare]]);
+   if (winCheck) {
+    setWinner(winCheck);
+    resetPlayers();
+    return;
+  }
+
+   setXIsNext(true);
   }
 
   const computerMove = (allSquares: SquareValue[]) => {
