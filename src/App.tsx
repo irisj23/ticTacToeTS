@@ -77,6 +77,7 @@ function App() {
   let [squares, setSquares] = useState<SquareValue[]>(Array(9).fill(null));
   let [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
   let [nextPlayer, setNextPlayer] = useState<string | null>(null);
+  let [tie, setTie] = useState<string | null>(null);
 
 //console.log(squares)
   const handleClick = (i: number): void => {
@@ -87,14 +88,7 @@ function App() {
     }
 
 
-    if (checkWin(squares)) {
 
-      let win = checkWin(squares)
-      setWinner(win);
-      setCurrentPlayer('')
-      setNextPlayer('')
-      return;
-    }
     console.log('i: ', i)
     squares[i] = xIsNext ? 'X' : 'O';
 
@@ -102,6 +96,15 @@ function App() {
 
     xIsNext ? setCurrentPlayer('X is playing') : setCurrentPlayer('O is playing');
     xIsNext ? setNextPlayer('O is next') : setNextPlayer('X is next');
+
+    let win = checkWin(squares);
+
+    if (win) {
+      setWinner(win);
+      setCurrentPlayer('')
+      setNextPlayer('')
+      return;
+    }
 
   }
 
@@ -118,21 +121,22 @@ function App() {
           TIC TAC TOE
       </Header>
       <BoardSquares>
-          <br/>
-          <Board
+        <br/>
+        <Board
           squares={squares}
           onClick={i => handleClick(i)}
-          />
+        />
       </BoardSquares>
       <PlayerTurns>
-      {currentPlayer}
-      <br/>
-      {nextPlayer}
+        {currentPlayer}
+        <br/>
+        {nextPlayer}
       </PlayerTurns>
+      {tie ? 'tie' : '' }
       {winner &&
-            <Winner>
-            {winner} is winner!
-          </Winner>
+        <Winner>
+          {winner} is winner!
+        </Winner>
       }
       <Reset onClick={resetBoard}>
         RESET
