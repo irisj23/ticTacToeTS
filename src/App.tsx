@@ -24,19 +24,6 @@ const BoardSquares = styled.div`
   padding: 5px 50px 5px 50px;
 
 `
-const Reset = styled.button`
-  order: 5;
-  padding: 8px;
-  text-align: center;
-  color: #1abc9c;
-  font-size: 30px;
-`
-
-const Winner = styled.div`
-  order: 4;
-  font-size: 60px;
-  font-weight: bold;
-`
 
 const PlayerTurns = styled.div`
   order: 3;
@@ -44,6 +31,26 @@ const PlayerTurns = styled.div`
   font-weight: bold;
   padding: 15px;
   text-align: center;
+`
+
+const DetectTie = styled.div`
+  order: 4;
+  font-size: 60px;
+  font-weight: bold;
+`
+
+const Winner = styled.div`
+  order: 5;
+  font-size: 60px;
+  font-weight: bold;
+`
+
+const Reset = styled.button`
+  order: 6;
+  padding: 8px;
+  text-align: center;
+  color: #1abc9c;
+  font-size: 30px;
 `
 
 type SquareValue = 'X' | 'O' | null;
@@ -105,7 +112,11 @@ function App() {
       setNextPlayer('')
       return;
     }
-
+    if (squares.indexOf(null) === -1) {
+      setTie('tie')
+      setCurrentPlayer('')
+      setNextPlayer('')
+    }
   }
 
   const resetBoard = () => {
@@ -113,6 +124,7 @@ function App() {
     setWinner(null)
     setCurrentPlayer('')
     setNextPlayer('')
+    setTie('')
   }
 
   return (
@@ -132,7 +144,13 @@ function App() {
         <br/>
         {nextPlayer}
       </PlayerTurns>
-      {tie ? 'tie' : '' }
+
+
+      {tie &&
+        <DetectTie>
+          We have a tie!
+        </DetectTie>
+      }
       {winner &&
         <Winner>
           {winner} is winner!
