@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Board from './Board';
 import styled from 'styled-components';
+//import { JsxElement } from 'typescript';
 
 const Container = styled.div`
   display: flex;
@@ -17,12 +18,10 @@ const Header = styled.div`
   text-align: center;
   color: #1abc9c;
   font-size: 35px;
-
 `
 const BoardSquares = styled.div`
   order: 2;
   padding: 5px 50px 5px 50px;
-
 `
 
 const PlayerTurns = styled.div`
@@ -77,23 +76,26 @@ const checkWin = (squares: SquareValue[]): SquareValue => {
   return null;
 }
 
-function App() {
+const App: React.FC = (props: {}) => {
 
   let [winner, setWinner] = useState<string | null>(null);
   let [xIsNext, setXIsNext] = useState<boolean>(true);
   let [squares, setSquares] = useState<SquareValue[]>(Array(9).fill(null));
-  let [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
+  //let [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
   let [nextPlayer, setNextPlayer] = useState<string | null>(null);
   let [tie, setTie] = useState<string | null>(null);
+  let [compMove, setCompMove] = useState<boolean>(false);
+  let [availableSquares, setAvailableSquares] = useState<number[]>(Array(9));
 
 
-  const resetPlayers = () => {
-    setCurrentPlayer('')
+  const resetPlayers = (): void => {
+    //setCurrentPlayer('')
     setNextPlayer('')
   }
 
   const handleClick = (i: number): void => {
 
+    //console.log('sqaures1: ', squares)
     if (winner) return;
 
     if (squares[i] !== null) {
@@ -102,11 +104,14 @@ function App() {
     }
 
     console.log('i: ', i)
+
     squares[i] = xIsNext ? 'X' : 'O';
+    let updatedSquares = [...squares, squares[i]];
+
+    setSquares(updatedSquares)
 
     setXIsNext(!xIsNext);
 
-    xIsNext ? setCurrentPlayer('X is playing') : setCurrentPlayer('O is playing');
     xIsNext ? setNextPlayer('O is next') : setNextPlayer('X is next');
 
     let win = checkWin(squares);
@@ -120,13 +125,53 @@ function App() {
       setTie('tie')
       resetPlayers();
     }
+
+    let randomSquare = computerMove(updatedSquares);
+    console.log('random: ', randomSquare)
+   // setAvailableSquares(randomSquares)
+   xIsNext ? squares[randomSquare] = 'O' : squares[randomSquare] = 'X';
+
+   setSquares([...squares, squares[randomSquare]]);
+   setXIsNext(!xIsNext);
+
   }
 
-  const resetBoard = () => {
+  const computerMove = (allSquares: SquareValue[]) => {
+    //if (compMove)
+
+    //filter the available square
+    //pick a random available square and set square to 0
+
+    // let updatedAvailSquares: number[] = squares.filter((square, index) => {
+    //   return index !== i;
+    // })
+
+    // setAvailableSquares(updatedAvailSquares)
+
+    let available: number[] = [];
+    allSquares.forEach((square, i) => {
+      if (square === null) {
+        available.push(i)
+      }
+    })
+
+    //return available;
+
+    let randomSquare = available[Math.floor(Math.random() * available.length)];
+
+    console.log(randomSquare)
+    return randomSquare;
+   // console.log('random: ', randomSquare)
+    //setSquares(randomSquare);
+
+  }
+
+  const resetBoard = (): void => {
     setSquares(Array(9).fill(null))
     setWinner(null)
     resetPlayers();
     setTie('')
+    setXIsNext(true);
   }
 
   return (
@@ -142,7 +187,7 @@ function App() {
         />
       </BoardSquares>
       <PlayerTurns>
-        {currentPlayer}
+
         <br/>
         {nextPlayer}
       </PlayerTurns>
@@ -160,9 +205,6 @@ function App() {
       <Reset onClick={resetBoard}>
         RESET
       </Reset>
-
-
-
     </Container>
   );
 }

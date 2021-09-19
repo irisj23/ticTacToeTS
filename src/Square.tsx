@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 
@@ -17,12 +17,12 @@ interface SquareProps {
   onClick(): void;
 }
 
-const Square: React.FC<SquareProps> = ({ value, onClick}) => {
+const Square: React.FC<SquareProps> = (props: SquareProps) => {
 
 
   return (
     <React.Fragment>
-      <Button onClick={onClick}>{value}</Button>
+      <Button onClick={props.onClick}>{props.value}</Button>
     </React.Fragment>
   )
 }
