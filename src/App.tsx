@@ -86,7 +86,12 @@ function App() {
   let [nextPlayer, setNextPlayer] = useState<string | null>(null);
   let [tie, setTie] = useState<string | null>(null);
 
-//console.log(squares)
+
+  const resetPlayers = () => {
+    setCurrentPlayer('')
+    setNextPlayer('')
+  }
+
   const handleClick = (i: number): void => {
 
     if (winner) return;
@@ -108,22 +113,19 @@ function App() {
 
     if (win) {
       setWinner(win);
-      setCurrentPlayer('')
-      setNextPlayer('')
+      resetPlayers();
       return;
     }
     if (squares.indexOf(null) === -1) {
       setTie('tie')
-      setCurrentPlayer('')
-      setNextPlayer('')
+      resetPlayers();
     }
   }
 
   const resetBoard = () => {
     setSquares(Array(9).fill(null))
     setWinner(null)
-    setCurrentPlayer('')
-    setNextPlayer('')
+    resetPlayers();
     setTie('')
   }
 
@@ -144,7 +146,6 @@ function App() {
         <br/>
         {nextPlayer}
       </PlayerTurns>
-
 
       {tie &&
         <DetectTie>
