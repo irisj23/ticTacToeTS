@@ -1,6 +1,13 @@
 # Play Tic Tac Toe:
 
-https://tic-tac-toe-ijiang.netlify.app/
+deployment link: https://tic-tac-toe-ijiang.netlify.app/
+
+This game is built using React with TypeScript as part my journey to learn TypeScript :)
+
+Currently devloping in progress 👷‍♀️ 🚧
+
+<img src="./overview.gif" width="600" height="500">
+
 
 # Getting Started with Create React App
 
