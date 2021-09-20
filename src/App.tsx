@@ -81,17 +81,10 @@ const App: React.FC = (props: {}) => {
   let [winner, setWinner] = useState<string | null>(null);
   let [xIsNext, setXIsNext] = useState<boolean>(true);
   let [squares, setSquares] = useState<SquareValue[]>(Array(9).fill(null));
-  //let [currentPlayer, setCurrentPlayer] = useState<string | null>(null);
   let [nextPlayer, setNextPlayer] = useState<string | null>(null);
   let [tie, setTie] = useState<string | null>(null);
   let [compMove, setCompMove] = useState<boolean>(false);
-  let [availableSquares, setAvailableSquares] = useState<number[]>(Array(9));
 
-
-  const resetPlayers = (): void => {
-    //setCurrentPlayer('')
-    setNextPlayer('')
-  }
 
   const handleClick = (i: number): void => {
 
@@ -118,12 +111,12 @@ const App: React.FC = (props: {}) => {
 
     if (win) {
       setWinner(win);
-      resetPlayers();
+      setNextPlayer('');
       return;
     }
     if (squares.indexOf(null) === -1) {
       setTie('tie')
-      resetPlayers();
+      setNextPlayer('');
     }
 
     let randomSquare = computerMove(updatedSquares);
@@ -135,7 +128,7 @@ const App: React.FC = (props: {}) => {
    let winCheck = checkWin([...squares, squares[randomSquare]]);
    if (winCheck) {
     setWinner(winCheck);
-    resetPlayers();
+    setNextPlayer('');
     return;
   }
 
@@ -145,15 +138,6 @@ const App: React.FC = (props: {}) => {
   const computerMove = (allSquares: SquareValue[]) => {
     //if (compMove)
 
-    //filter the available square
-    //pick a random available square and set square to 0
-
-    // let updatedAvailSquares: number[] = squares.filter((square, index) => {
-    //   return index !== i;
-    // })
-
-    // setAvailableSquares(updatedAvailSquares)
-
     let available: number[] = [];
     allSquares.forEach((square, i) => {
       if (square === null) {
@@ -161,21 +145,16 @@ const App: React.FC = (props: {}) => {
       }
     })
 
-    //return available;
-
     let randomSquare = available[Math.floor(Math.random() * available.length)];
 
-    console.log(randomSquare)
     return randomSquare;
-   // console.log('random: ', randomSquare)
-    //setSquares(randomSquare);
 
   }
 
   const resetBoard = (): void => {
     setSquares(Array(9).fill(null))
     setWinner(null)
-    resetPlayers();
+    setNextPlayer('');
     setTie('')
     setXIsNext(true);
   }
