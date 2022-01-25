@@ -2,7 +2,7 @@
 
 deployment link: https://tic-tac-toe-ijiang.netlify.app/
 
-This game is built using React with TypeScript as part my journey to learn TypeScript :)
+This game is built using React with TypeScript
 
 Currently devloping in progress 👷‍♀️ 🚧
 
